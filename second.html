@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="second.css">
+    <title>For you</title>
+    <link rel="icon" type="image/png" href="m.png">
+    <style>
+        #music-icon {
+            width: 40px; /* Adjust the size of the icon */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img src="to marouane.png" alt="marouane"><br>
+    <img src="letter.png" alt="marouane">
+    <img src="marouane.png" alt="marouane"><br>
+
+    <!-- Music Button -->
+    <button id="music-button">
+        <img id="music-icon" src="volume.png" alt="Music Icon"> <!-- Start with mute icon -->
+    </button>
+
+    <!-- Audio -->
+    <audio id="background-music" loop autoplay>
+        <source src="583 Oum - Lik (Acoustic Session)(720PHD).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const musicButton = document.getElementById('music-button');
+        const musicIcon = document.getElementById('music-icon'); // Make sure we have the correct reference
+        const backgroundMusic = document.getElementById('background-music');
+
+        // Set the volume to a lower value (0.3 for a much lower sound)
+        backgroundMusic.volume = 0.3;
+
+        // Play music when the page loads
+        window.addEventListener('load', () => {
+            // Check if music was previously playing
+            const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+
+            if (isPlaying) {
+                backgroundMusic.play();
+                musicIcon.src = 'volume.png'; // Update to volume icon if music is playing
+            } else {
+                musicIcon.src = 'mute.png'; // Update to mute icon if music is paused
+            }
+        });
+
+        // Toggle music playback and icon
+        musicButton.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                localStorage.setItem('musicPlaying', 'true');
+                musicIcon.src = 'volume.png'; // Update to volume icon
+            } else {
+                backgroundMusic.pause();
+                localStorage.setItem('musicPlaying', 'false');
+                musicIcon.src = 'mute.png'; // Update to mute icon
+            }
+        });
+    </script>
+</body>
+</html>

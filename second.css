@@ -1,0 +1,49 @@
+body {
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('bd.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+img {
+    max-width: 100%; /* Ensures the image scales for smaller devices */
+}
+
+ /* Fancy Gold Scrollbar */
+ ::-webkit-scrollbar {
+    width: 7px; /* Width of the scrollbar */
+}
+::-webkit-scrollbar-track {
+    background: #f5f5f5; /* Light background for track */
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #3E2614, #c9a17d); /* Gold gradient */
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #8D6137, #3E2614); /* Inverted gradient on hover */
+}
+
+     /* Music Icon Button */
+     #music-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #3E2614; /* Gold color */
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    #music-button img {
+        width: 30px;
+        height: 30px;
+    }
+    
