@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('bd.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+a img {
+    width: 700px; /* Set the size of the PNG */
+    height: auto;
+    display: block;
+    cursor: pointer;
+    animation: tilt-move 1.5s infinite ease-in-out;
+}
+a:hover img {
+    animation: tilt-hover 1.5s infinite ease-in-out; /* Add scaling effect */
+}
+/* Keyframes for regular animation */
+@keyframes tilt-move {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotate(-3deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(5px) rotate(3deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+/* Keyframes for hover animation with scaling */
+@keyframes tilt-hover {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-5px) rotate(-3deg) scale(1.05); /* Slight scaling */
+    }
+    50% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    75% {
+        transform: translateY(5px) rotate(3deg) scale(1.05); /* Slight scaling */
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
