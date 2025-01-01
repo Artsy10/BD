@@ -17,17 +17,26 @@
             height: 100vh;
             background: url('bd.jpg') no-repeat center center fixed;
             background-size: cover;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center; /* Ensures the images and text are centered */
         }
 
-        /* Ensure the images are responsive */
         img {
-            max-width: 100%;
-            height: auto; /* Maintain aspect ratio */
-            margin-bottom: 20px; /* Space between images */
+            max-width: 100%; /* Ensures the image scales for smaller devices */
+        }
+
+        /* Fancy Gold Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px; /* Width of the scrollbar */
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5; /* Light background for track */
+            border-radius: 50px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #3E2614, #c9a17d); /* Gold gradient */
+            border-radius: 50px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #8D6137, #3E2614); /* Inverted gradient on hover */
         }
 
         /* Music Icon Button */
@@ -35,7 +44,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #3E2614;
+            background-color: #3E2614; /* Gold color */
             border: none;
             border-radius: 50%;
             width: 50px;
@@ -53,17 +62,15 @@
         }
 
         #music-icon {
-            width: 40px;
+            width: 40px; /* Adjust the size of the icon */
             height: auto;
         }
     </style>
 </head>
 <body>
-
-    <!-- Images with Lazy Loading -->
-    <img class="lazyload" data-src="to marouane.png" alt="marouane" loading="lazy">
-    <img class="lazyload" data-src="letter.png" alt="marouane" loading="lazy">
-    <img class="lazyload" data-src="marouane.png" alt="marouane" loading="lazy">
+    <img src="to marouane.png" alt="marouane"><br>
+    <img src="letter.png" alt="marouane">
+    <img src="marouane.png" alt="marouane"><br>
 
     <!-- Music Button -->
     <button id="music-button">
@@ -77,32 +84,6 @@
     </audio>
 
     <script>
-        // LazyLoad.js script for lazy loading images
-        document.addEventListener("DOMContentLoaded", function() {
-            var lazyloadImages = document.querySelectorAll("img.lazyload");
-            if ("IntersectionObserver" in window) {
-                let lazyloadObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            let image = entry.target;
-                            image.src = image.dataset.src;
-                            image.classList.remove("lazyload");
-                            lazyloadObserver.unobserve(image);
-                        }
-                    });
-                });
-
-                lazyloadImages.forEach((image) => {
-                    lazyloadObserver.observe(image);
-                });
-            } else {
-                // Fallback for browsers that don't support IntersectionObserver
-                lazyloadImages.forEach((image) => {
-                    image.src = image.dataset.src;
-                });
-            }
-        });
-
         // Get the audio element and mute/unmute button
         const audio = document.querySelector('audio');
         const musicButton = document.getElementById('music-button');
@@ -137,6 +118,5 @@
             }
         });
     </script>
-
 </body>
 </html>
