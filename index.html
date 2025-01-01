@@ -24,7 +24,7 @@
 
         /* Link with image */
         a img {
-            width: 700px; /* Set the size of the PNG */
+            width: 1000px; /* Set the size of the PNG */
             height: auto;
             display: block;
             cursor: pointer;
@@ -73,6 +73,29 @@
                 transform: translateY(0) rotate(0deg) scale(1);
             }
         }
+
+        /* Ensure responsive layout for smaller devices */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* Add some padding for better spacing */
+    }
+
+    img {
+        max-width: 90%; /* Slightly reduce image width on small screens */
+        margin-bottom: 10px; /* Reduce spacing between images */
+    }
+
+    #music-button {
+        width: 40px; /* Smaller button on mobile */
+        height: 40px;
+    }
+
+    #music-button img {
+        width: 20px; /* Adjust music icon size */
+        height: 20px;
+    }
+}
+
     </style>
 </head>
 <body>
