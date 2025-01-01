@@ -11,23 +11,23 @@
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center; /* Center the content horizontally */
-    align-items: center; /* Center the content vertically */
-    height: 100vh;
     background: url('bd.jpg') no-repeat center center fixed;
     background-size: cover;
-    flex-direction: column; /* Stack the images vertically */
-    text-align: center; /* Center the text if any */
 }
 
 /* Ensure the images are responsive and centered */
 img {
     max-width: 1080px; /* Make the images scale, but prevent them from getting too large */
     height: auto;
-    margin: 10px 0; /* Add some space between images */
+    width: 100%; 
+    margin: 10px 0; /* Space between images */
 }
 
 /* Fancy Gold Scrollbar */
@@ -78,9 +78,9 @@ img {
 </style>
 </head>
 <body>
-    <img src="to marouane.png" alt="marouane"><br>
-    <img src="letter.png" alt="marouane">
-    <img src="marouane.png" alt="marouane"><br>
+    <img src="to marouane.png" alt="marouane" loading="lazy"><br>
+    <img src="letter.png" alt="marouane" loading="lazy">
+    <img src="marouane.png" alt="marouane" loading="lazy"><br>
 
     <!-- Music Button -->
     <button id="music-button">
