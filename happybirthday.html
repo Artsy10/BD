@@ -111,44 +111,37 @@
     </audio>
 
     <script>
-        // Lazy Loading
-        document.addEventListener("DOMContentLoaded", function() {
-            const lazyloadImages = document.querySelectorAll("img.lazyload");
-            if ("IntersectionObserver" in window) {
-                const lazyloadObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            const image = entry.target;
-                            image.src = image.dataset.src;
-                            lazyloadObserver.unobserve(image);
-                        }
-                    });
-                });
+        // Get the audio element and mute/unmute button
+        const audio = document.querySelector('audio');
+        const musicButton = document.getElementById('music-button');
+        const musicIcon = document.getElementById('music-icon'); // Make sure we have the correct reference
+        const backgroundMusic = document.getElementById('background-music');
 
-                lazyloadImages.forEach((image) => {
-                    lazyloadObserver.observe(image);
-                });
+        // Set the volume to a lower value (0.3 for a much lower sound)
+        backgroundMusic.volume = 0.3;
+
+        // Play music when the page loads and check the state
+        window.addEventListener('load', () => {
+            const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+
+            if (isPlaying) {
+                backgroundMusic.play();
+                musicIcon.src = 'volume.png'; // Update to volume icon if music is playing
             } else {
-                lazyloadImages.forEach((image) => {
-                    image.src = image.dataset.src;
-                });
+                musicIcon.src = 'mute.png'; // Update to mute icon if music is paused
             }
         });
 
-        // Music Control
-        const musicButton = document.getElementById("music-button");
-        const musicIcon = document.getElementById("music-icon");
-        const backgroundMusic = document.getElementById("background-music");
-
-        backgroundMusic.volume = 0.3;
-
-        musicButton.addEventListener("click", () => {
+        // Toggle music playback and icon
+        musicButton.addEventListener('click', () => {
             if (backgroundMusic.paused) {
                 backgroundMusic.play();
-                musicIcon.src = "volume.png";
+                localStorage.setItem('musicPlaying', 'true');
+                musicIcon.src = 'volume.png'; // Update to volume icon
             } else {
                 backgroundMusic.pause();
-                musicIcon.src = "mute.png";
+                localStorage.setItem('musicPlaying', 'false');
+                musicIcon.src = 'mute.png'; // Update to mute icon
             }
         });
     </script>
