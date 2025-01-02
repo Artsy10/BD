@@ -75,32 +75,48 @@
         }
 
         /* Ensure responsive layout for smaller devices */
-@media (max-width: 768px) {
-    body {
-        padding: 10px; /* Add some padding for better spacing */
-    }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; /* Add some padding for better spacing */
+            }
 
-    img {
-        width: 90%; /* Slightly reduce image width on small screens */
-        margin-bottom: 10px; /* Reduce spacing between images */
-    }
+            img {
+                width: 90%; /* Slightly reduce image width on small screens */
+                margin-bottom: 10px; /* Reduce spacing between images */
+            }
 
-    #music-button {
-        width: 40px; /* Smaller button on mobile */
-        height: 40px;
-    }
+            #music-button {
+                width: 40px; /* Smaller button on mobile */
+                height: 40px;
+            }
 
-    #music-button img {
-        width: 20px; /* Adjust music icon size */
-        height: 20px;
-    }
-}
-
+            #music-button img {
+                width: 20px; /* Adjust music icon size */
+                height: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="happybirthday.html">
+    <a href="happybirthday.html" id="music-link">
         <img src="letter copy.png" alt="db">
     </a>
+
+    <script>
+        // Function to play the audio on click
+        document.getElementById('music-link').addEventListener('click', function(event) {
+            // Prevent default action to ensure we control the navigation
+            event.preventDefault();
+
+            // Play the music before navigating
+            var audio = new Audio('your-music-file.mp3'); // Replace with your music file path
+            audio.play();
+
+            // Navigate to the second page after a short delay (to allow audio to start)
+            setTimeout(function() {
+                window.location.href = 'happybirthday.html'; // Navigate to the second page
+            }, 1000); // Adjust time if necessary (1000ms = 1 second)
+        });
+    </script>
 </body>
 </html>
