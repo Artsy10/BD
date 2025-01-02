@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            align-items:center;
+            align-items: center;
             background: url('bd.jpg') no-repeat center center fixed;
             background-size: cover;
         }
@@ -24,18 +24,21 @@
 
         /* Fancy Gold Scrollbar */
         ::-webkit-scrollbar {
-            width: 7px; /* Width of the scrollbar */
+            width: 7px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #f5f5f5; /* Light background for track */
+            background: #f5f5f5;
             border-radius: 50px;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, #3E2614, #c9a17d); /* Gold gradient */
+            background: linear-gradient(45deg, #3E2614, #c9a17d);
             border-radius: 50px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(45deg, #8D6137, #3E2614); /* Inverted gradient on hover */
+            background: linear-gradient(45deg, #8D6137, #3E2614);
         }
 
         /* Music Button */
@@ -94,65 +97,71 @@
         <img id="music-icon" src="volume.png" alt="Music Icon">
     </button>
 
-    <!-- Audio Player (Autoplay test) -->
+    
+    <!-- Audio -->
     <audio id="background-music" loop>
-        <source src="583_Oum-Lik_Acoustic.mp3" type="audio/mpeg">
+        <source src="583 Oum - Lik (Acoustic Session)(720PHD).mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-       document.addEventListener("DOMContentLoaded", function() {
-    // Lazy Loading for images (not changed)
-    const lazyloadImages = document.querySelectorAll("img.lazyload");
-    if ("IntersectionObserver" in window) {
-        const lazyloadObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const image = entry.target;
+      // Lazy Loading
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyloadImages = document.querySelectorAll("img.lazyload");
+            if ("IntersectionObserver" in window) {
+                const lazyloadObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            lazyloadObserver.unobserve(image);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach((image) => {
+                    lazyloadObserver.observe(image);
+                });
+            } else {
+                lazyloadImages.forEach((image) => {
                     image.src = image.dataset.src;
-                    lazyloadObserver.unobserve(image);
-                }
-            });
+                });
+            }
         });
-        lazyloadImages.forEach((image) => {
-            lazyloadObserver.observe(image);
+            
+        // Get the audio element and mute/unmute button
+        const audio = document.querySelector('audio');
+        const musicButton = document.getElementById('music-button');
+        const musicIcon = document.getElementById('music-icon'); // Make sure we have the correct reference
+        const backgroundMusic = document.getElementById('background-music');
+
+        // Set the volume to a lower value (0.3 for a much lower sound)
+        backgroundMusic.volume = 0.3;
+
+        // Play music when the page loads and check the state
+        window.addEventListener('load', () => {
+            const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+
+            if (isPlaying) {
+                backgroundMusic.play();
+                musicIcon.src = 'volume.png'; // Update to volume icon if music is playing
+            } else {
+                musicIcon.src = 'mute.png'; // Update to mute icon if music is paused
+            }
         });
-    } else {
-        lazyloadImages.forEach((image) => {
-            image.src = image.dataset.src;
+
+        // Toggle music playback and icon
+        musicButton.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                localStorage.setItem('musicPlaying', 'true');
+                musicIcon.src = 'volume.png'; // Update to volume icon
+            } else {
+                backgroundMusic.pause();
+                localStorage.setItem('musicPlaying', 'false');
+                musicIcon.src = 'mute.png'; // Update to mute icon
+            }
         });
-    }
-
-    // Music Control for button functionality
-    const musicButton = document.getElementById("music-button");
-    const musicIcon = document.getElementById("music-icon");
-    const backgroundMusic = document.getElementById("background-music");
-
-    // Set volume to 100% for debugging
-    backgroundMusic.volume = 1.0;
-
-    // Music button click event to toggle play/pause
-    musicButton.addEventListener("click", () => {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicIcon.src = "volume.png";
-        } else {
-            backgroundMusic.pause();
-            musicIcon.src = "mute.png";
-        }
-    });
-
-    // Autoplay (ensures a user action triggers audio playback)
-    function tryAutoplay() {
-        backgroundMusic.play().catch((error) => {
-            console.log("Autoplay failed, trying manual play:", error);
-        });
-    }
-
-    // Trigger autoplay function (works for most browsers after user interaction)
-    tryAutoplay();
-});
-
     </script>
 </body>
 </html>
