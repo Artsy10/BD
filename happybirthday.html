@@ -9,7 +9,7 @@
             box-sizing: border-box;
         }
 
-         body {
+        body {
             margin: 0;
             padding: 0;
             align-items: center;
@@ -20,7 +20,7 @@
 
         img {
             max-width: 100%; /* Ensures the image scales for smaller devices */
-        } 
+        }
 
         /* Fancy Gold Scrollbar */
         ::-webkit-scrollbar {
@@ -36,7 +36,9 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(45deg, #8D6137, #3E2614); /* Inverted gradient on hover */
-        } 
+        }
+
+        /* Music Button */
         #music-button {
             position: fixed;
             bottom: 20px;
@@ -84,21 +86,9 @@
 <body>
 
     <!-- Responsive Images with Lazy Loading -->
-    <img 
-        class="lazyload" 
-        data-src="to marouane.png" 
-        alt="marouane" 
-        loading="lazy"><br>
-    <img 
-        class="lazyload" 
-        data-src="letter.png" 
-        alt="marouane" 
-        loading="lazy">
-    <img 
-        class="lazyload" 
-        data-src="marouane.png" 
-        alt="marouane" 
-        loading="lazy"><br>
+    <img class="lazyload" data-src="to marouane.png" alt="to mar">
+    <img class="lazyload" data-src="letter.png" alt="letter">
+    <img class="lazyload" data-src="marouane.png" alt="marouane">
 
     <!-- Music Button -->
     <button id="music-button">
@@ -111,53 +101,47 @@
     </audio>
 
     <script>
-    // Lazy Loading
-    document.addEventListener("DOMContentLoaded", function() {
-        const lazyloadImages = document.querySelectorAll("img.lazyload");
-        if ("IntersectionObserver" in window) {
-            const lazyloadObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const image = entry.target;
-                        image.src = image.dataset.src;
-                        lazyloadObserver.unobserve(image);
-                    }
+        // Lazy Loading
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyloadImages = document.querySelectorAll("img.lazyload");
+            if ("IntersectionObserver" in window) {
+                const lazyloadObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            lazyloadObserver.unobserve(image);
+                        }
+                    });
                 });
-            });
 
-            lazyloadImages.forEach((image) => {
-                lazyloadObserver.observe(image);
-            });
-        } else {
-            lazyloadImages.forEach((image) => {
-                image.src = image.dataset.src;
-            });
-        }
-    });
+                lazyloadImages.forEach((image) => {
+                    lazyloadObserver.observe(image);
+                });
+            } else {
+                lazyloadImages.forEach((image) => {
+                    image.src = image.dataset.src;
+                });
+            }
+        });
 
-    // Music Control
-    const musicButton = document.getElementById("music-button");
-    const musicIcon = document.getElementById("music-icon");
-    const backgroundMusic = document.getElementById("background-music");
+        // Music Control
+        const musicButton = document.getElementById("music-button");
+        const musicIcon = document.getElementById("music-icon");
+        const backgroundMusic = document.getElementById("background-music");
 
-    backgroundMusic.volume = 0.3;
+        backgroundMusic.volume = 0.3;
 
-    // Ensure that the music starts only when the user clicks
-    musicButton.addEventListener("click", () => {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicIcon.src = "volume.png"; // Update icon when music is playing
-        } else {
-            backgroundMusic.pause();
-            musicIcon.src = "mute.png"; // Update icon when music is paused
-        }
-    });
-
-    // Handle errors or fallback if the audio doesn't play
-    backgroundMusic.onerror = () => {
-        console.error("Audio file could not be loaded.");
-    };
-</script>
+        musicButton.addEventListener("click", () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                musicIcon.src = "volume.png";
+            } else {
+                backgroundMusic.pause();
+                musicIcon.src = "mute.png";
+            }
+        });
+    </script>
 
 </body>
 </html>
