@@ -101,58 +101,55 @@
     </audio>
 
     <script>
-       document.addEventListener("DOMContentLoaded", function() {
-    // Lazy Loading for images (not changed)
-    const lazyloadImages = document.querySelectorAll("img.lazyload");
-    if ("IntersectionObserver" in window) {
-        const lazyloadObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const image = entry.target;
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lazy Loading for images
+            const lazyloadImages = document.querySelectorAll("img.lazyload");
+            if ("IntersectionObserver" in window) {
+                const lazyloadObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            lazyloadObserver.unobserve(image);
+                        }
+                    });
+                });
+                lazyloadImages.forEach((image) => {
+                    lazyloadObserver.observe(image);
+                });
+            } else {
+                lazyloadImages.forEach((image) => {
                     image.src = image.dataset.src;
-                    lazyloadObserver.unobserve(image);
+                });
+            }
+
+            // Music Control for button functionality
+            const musicButton = document.getElementById("music-button");
+            const musicIcon = document.getElementById("music-icon");
+            const backgroundMusic = document.getElementById("background-music");
+
+            // Set volume to 100% for debugging
+            backgroundMusic.volume = 1.0;
+
+            // Music button click event to toggle play/pause
+            musicButton.addEventListener("click", () => {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play();
+                    musicIcon.src = "volume.png";
+                } else {
+                    backgroundMusic.pause();
+                    musicIcon.src = "mute.png";
                 }
             });
+
+            // Autoplay (triggered by a user interaction like a click)
+            musicButton.addEventListener("click", function() {
+                backgroundMusic.play().catch((error) => {
+                    console.log("Autoplay failed, trying manual play:", error);
+                });
+            });
         });
-        lazyloadImages.forEach((image) => {
-            lazyloadObserver.observe(image);
-        });
-    } else {
-        lazyloadImages.forEach((image) => {
-            image.src = image.dataset.src;
-        });
-    }
-
-    // Music Control for button functionality
-    const musicButton = document.getElementById("music-button");
-    const musicIcon = document.getElementById("music-icon");
-    const backgroundMusic = document.getElementById("background-music");
-
-    // Set volume to 100% for debugging
-    backgroundMusic.volume = 1.0;
-
-    // Music button click event to toggle play/pause
-    musicButton.addEventListener("click", () => {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicIcon.src = "volume.png";
-        } else {
-            backgroundMusic.pause();
-            musicIcon.src = "mute.png";
-        }
-    });
-
-    // Autoplay (ensures a user action triggers audio playback)
-    function tryAutoplay() {
-        backgroundMusic.play().catch((error) => {
-            console.log("Autoplay failed, trying manual play:", error);
-        });
-    }
-
-    // Trigger autoplay function (works for most browsers after user interaction)
-    tryAutoplay();
-});
-
     </script>
 </body>
 </html>
+
