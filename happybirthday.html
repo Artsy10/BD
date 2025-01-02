@@ -111,47 +111,53 @@
     </audio>
 
     <script>
-        // Lazy Loading
-        document.addEventListener("DOMContentLoaded", function() {
-            const lazyloadImages = document.querySelectorAll("img.lazyload");
-            if ("IntersectionObserver" in window) {
-                const lazyloadObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            const image = entry.target;
-                            image.src = image.dataset.src;
-                            lazyloadObserver.unobserve(image);
-                        }
-                    });
+    // Lazy Loading
+    document.addEventListener("DOMContentLoaded", function() {
+        const lazyloadImages = document.querySelectorAll("img.lazyload");
+        if ("IntersectionObserver" in window) {
+            const lazyloadObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src;
+                        lazyloadObserver.unobserve(image);
+                    }
                 });
+            });
 
-                lazyloadImages.forEach((image) => {
-                    lazyloadObserver.observe(image);
-                });
-            } else {
-                lazyloadImages.forEach((image) => {
-                    image.src = image.dataset.src;
-                });
-            }
-        });
+            lazyloadImages.forEach((image) => {
+                lazyloadObserver.observe(image);
+            });
+        } else {
+            lazyloadImages.forEach((image) => {
+                image.src = image.dataset.src;
+            });
+        }
+    });
 
-        // Music Control
-        const musicButton = document.getElementById("music-button");
-        const musicIcon = document.getElementById("music-icon");
-        const backgroundMusic = document.getElementById("background-music");
+    // Music Control
+    const musicButton = document.getElementById("music-button");
+    const musicIcon = document.getElementById("music-icon");
+    const backgroundMusic = document.getElementById("background-music");
 
-        backgroundMusic.volume = 0.3;
+    backgroundMusic.volume = 0.3;
 
-        musicButton.addEventListener("click", () => {
-            if (backgroundMusic.paused) {
-                backgroundMusic.play();
-                musicIcon.src = "volume.png";
-            } else {
-                backgroundMusic.pause();
-                musicIcon.src = "mute.png";
-            }
-        });
-    </script>
+    // Ensure that the music starts only when the user clicks
+    musicButton.addEventListener("click", () => {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            musicIcon.src = "volume.png"; // Update icon when music is playing
+        } else {
+            backgroundMusic.pause();
+            musicIcon.src = "mute.png"; // Update icon when music is paused
+        }
+    });
+
+    // Handle errors or fallback if the audio doesn't play
+    backgroundMusic.onerror = () => {
+        console.error("Audio file could not be loaded.");
+    };
+</script>
 
 </body>
 </html>
