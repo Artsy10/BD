@@ -84,18 +84,10 @@
     </style>
 </head>
 <body>
-
-<<<<<<< HEAD
-     <!-- Responsive Images with Lazy Loading -->
-     <img class="lazyload" data-src="to marouane.png" alt="marouane">
-     <img class="lazyload" data-src="letter.png" alt="marouane">
-     <img class="lazyload" data-src="marouane.png" alt="marouane">
-=======
     <!-- Responsive Images with Lazy Loading -->
     <img class="lazyload" data-src="to marouane.png" alt="marouane">
     <img class="lazyload" data-src="letter.png" alt="marouane">
     <img class="lazyload" data-src="marouane.png" alt="marouane">
->>>>>>> c9fec2432551da986f92e8e6c7d8aedb3826047a
 
     <!-- Music Button -->
     <button id="music-button">
@@ -109,53 +101,58 @@
     </audio>
 
     <script>
-        // Lazy Loading
-        document.addEventListener("DOMContentLoaded", function() {
-            const lazyloadImages = document.querySelectorAll("img.lazyload");
-            if ("IntersectionObserver" in window) {
-                const lazyloadObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            const image = entry.target;
-                            image.src = image.dataset.src;
-                            lazyloadObserver.unobserve(image);
-                        }
-                    });
-                });
-
-                lazyloadImages.forEach((image) => {
-                    lazyloadObserver.observe(image);
-                });
-            } else {
-                lazyloadImages.forEach((image) => {
+       document.addEventListener("DOMContentLoaded", function() {
+    // Lazy Loading for images (not changed)
+    const lazyloadImages = document.querySelectorAll("img.lazyload");
+    if ("IntersectionObserver" in window) {
+        const lazyloadObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const image = entry.target;
                     image.src = image.dataset.src;
-                });
-            }
+                    lazyloadObserver.unobserve(image);
+                }
+            });
         });
-
-        // Music Control
-        const musicButton = document.getElementById("music-button");
-        const musicIcon = document.getElementById("music-icon");
-        const backgroundMusic = document.getElementById("background-music");
-
-        // Set volume to 100% for debugging
-        backgroundMusic.volume = 1.0;
-
-        musicButton.addEventListener("click", () => {
-            if (backgroundMusic.paused) {
-                backgroundMusic.play();
-                musicIcon.src = "volume.png";
-            } else {
-                backgroundMusic.pause();
-                musicIcon.src = "mute.png";
-            }
+        lazyloadImages.forEach((image) => {
+            lazyloadObserver.observe(image);
         });
+    } else {
+        lazyloadImages.forEach((image) => {
+            image.src = image.dataset.src;
+        });
+    }
 
-        // Autoplay test
+    // Music Control for button functionality
+    const musicButton = document.getElementById("music-button");
+    const musicIcon = document.getElementById("music-icon");
+    const backgroundMusic = document.getElementById("background-music");
+
+    // Set volume to 100% for debugging
+    backgroundMusic.volume = 1.0;
+
+    // Music button click event to toggle play/pause
+    musicButton.addEventListener("click", () => {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            musicIcon.src = "volume.png";
+        } else {
+            backgroundMusic.pause();
+            musicIcon.src = "mute.png";
+        }
+    });
+
+    // Autoplay (ensures a user action triggers audio playback)
+    function tryAutoplay() {
         backgroundMusic.play().catch((error) => {
-            console.log("Autoplay failed, ensure user interaction:", error);
+            console.log("Autoplay failed, trying manual play:", error);
         });
-    </script>
+    }
 
+    // Trigger autoplay function (works for most browsers after user interaction)
+    tryAutoplay();
+});
+
+    </script>
 </body>
 </html>
