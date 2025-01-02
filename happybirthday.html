@@ -105,27 +105,29 @@
     </audio>
 
     <script>
+      // Lazy Loading
         document.addEventListener("DOMContentLoaded", function() {
-    // Lazy Loading for images (not changed)
-    const lazyloadImages = document.querySelectorAll("img.lazyload");
-    if ("IntersectionObserver" in window) {
-        const lazyloadObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const image = entry.target;
+            const lazyloadImages = document.querySelectorAll("img.lazyload");
+            if ("IntersectionObserver" in window) {
+                const lazyloadObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.dataset.src;
+                            lazyloadObserver.unobserve(image);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach((image) => {
+                    lazyloadObserver.observe(image);
+                });
+            } else {
+                lazyloadImages.forEach((image) => {
                     image.src = image.dataset.src;
-                    lazyloadObserver.unobserve(image);
-                }
-            });
+                });
+            }
         });
-        lazyloadImages.forEach((image) => {
-            lazyloadObserver.observe(image);
-        });
-    } else {
-        lazyloadImages.forEach((image) => {
-            image.src = image.dataset.src;
-        });
-    }
             
         // Get the audio element and mute/unmute button
         const audio = document.querySelector('audio');
