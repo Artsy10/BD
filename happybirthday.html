@@ -85,16 +85,24 @@
 </head>
 <body>
 
+<<<<<<< HEAD
      <!-- Responsive Images with Lazy Loading -->
      <img class="lazyload" data-src="to marouane.png" alt="marouane">
      <img class="lazyload" data-src="letter.png" alt="marouane">
      <img class="lazyload" data-src="marouane.png" alt="marouane">
+=======
+    <!-- Responsive Images with Lazy Loading -->
+    <img class="lazyload" data-src="to marouane.png" alt="marouane">
+    <img class="lazyload" data-src="letter.png" alt="marouane">
+    <img class="lazyload" data-src="marouane.png" alt="marouane">
+>>>>>>> c9fec2432551da986f92e8e6c7d8aedb3826047a
 
     <!-- Music Button -->
     <button id="music-button">
         <img id="music-icon" src="volume.png" alt="Music Icon">
     </button>
 
+    <!-- Audio Player (Autoplay test) -->
     <audio id="background-music" loop>
         <source src="583_Oum-Lik_Acoustic.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -130,7 +138,8 @@
         const musicIcon = document.getElementById("music-icon");
         const backgroundMusic = document.getElementById("background-music");
 
-        backgroundMusic.volume = 0.3;
+        // Set volume to 100% for debugging
+        backgroundMusic.volume = 1.0;
 
         musicButton.addEventListener("click", () => {
             if (backgroundMusic.paused) {
@@ -140,6 +149,11 @@
                 backgroundMusic.pause();
                 musicIcon.src = "mute.png";
             }
+        });
+
+        // Autoplay test
+        backgroundMusic.play().catch((error) => {
+            console.log("Autoplay failed, ensure user interaction:", error);
         });
     </script>
 
